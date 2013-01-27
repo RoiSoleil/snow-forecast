@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Météo Des Neiges</string>
+    <string name="title_section3">Pays</string>
+    <string name="title_section2">A proximité</string>
+    <string name="title_section1">Favoris</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="none">none</string>
+    <string name="onTop">En haut</string>
+    <string name="newFall">Nouveau</string>
+    <string name="closed">Fermé</string>
+    <string name="closedDetails">Fermé pour la saison</string>
+    <string name="status">Status : </string>
+    <string name="message">Message : </string>
+    <string name="sorryErrorOccured">Désolé une erreur s\'est produite :\'(</string>
+    <string name="retry">Réessayer</string>
+
+</resources>
