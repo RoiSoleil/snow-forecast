@@ -1,13 +1,9 @@
 package roisoleil.snowforecast;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
-import roisoleil.snowforecast.adapter.ErrorAdapter;
 import roisoleil.snowforecast.adapter.PreviewAdapter;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.Menu;
@@ -18,13 +14,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
 import com.androidquery.util.XmlDom;
 
-public class CountrySectionFragment extends ListFragment {
-
-	final static String PREFERENCES = "Preferences";
-
-	final static String FAVORITES = "Favorites";
-
-	protected MenuItem refreshMenuItem;
+public class RegionSectionFragment extends ListFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -34,12 +24,9 @@ public class CountrySectionFragment extends ListFragment {
 	}
 
 	public void result(String url, XmlDom xmlDom, AjaxStatus status) {
-		if (refreshMenuItem != null) {
-			refreshMenuItem.setActionView(null);
-		}
 		if (200 == status.getCode() && xmlDom != null) {
-			PreviewAdapter favoriteAdapter = new PreviewAdapter(
-					getActivity(), xmlDom);
+			PreviewAdapter favoriteAdapter = new PreviewAdapter(getActivity(),
+					xmlDom);
 			setListAdapter(favoriteAdapter);
 			setListShown(true);
 		} else {
@@ -63,14 +50,10 @@ public class CountrySectionFragment extends ListFragment {
 
 	private void refresh(boolean forced) {
 		setListShown(false);
-		if (refreshMenuItem != null) {
-			refreshMenuItem.setActionView(R.layout.inprogress);
-		}
 		long expire = 24 * 60 * 60 * 1000;
 		if (forced) {
 			expire = 10;
 		}
-		Set<String> favorites = getFavorites();
 		AQuery aQuery = new AQuery(getActivity());
 		String url = "http://www.onthesnow.com/app/skireport/areas.html?ver=2.2&areas=724&androidid=5451516516516&language="
 				+ Locale.getDefault().getLanguage()
@@ -78,35 +61,17 @@ public class CountrySectionFragment extends ListFragment {
 				+ Locale.getDefault().getLanguage()
 				+ "_"
 				+ Locale.getDefault().getCountry();
-		// String url =
-		// "http://www.onthesnow.com/app/skireport/nearbyareas.html?ver=2.2&areaIds=724&androidid=5451516516516&language="
-		// + Locale.getDefault().getLanguage()
-		// + "&locale="
-		// + Locale.getDefault().getLanguage()
-		// + "_"
-		// + Locale.getDefault().getCountry();
 		aQuery.ajax(url, XmlDom.class, expire, this, "result");
-	}
-
-	private Set<String> getFavorites() {
-		Set<String> favorites = null;
-		SharedPreferences sharedPreferences = getActivity()
-				.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-		if (!sharedPreferences.contains(FAVORITES)) {
-			favorites = new HashSet<String>();
-			favorites.add("724");
-		} else {
-			favorites = sharedPreferences.getStringSet(FAVORITES,
-					new HashSet<String>());
-		}
-		return favorites;
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.favorite, menu);
-		refreshMenuItem = menu.findItem(R.id.item_refresh);
+	}
+	
+	private void createDatabase() {
+		getActivity().getD
 	}
 
 }

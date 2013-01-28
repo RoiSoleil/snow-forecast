@@ -85,7 +85,7 @@ public class HomeActivity extends FragmentActivity implements
 				fragment = new NearMeSectionFragment();
 				break;
 			case 2:
-				fragment = new CountrySectionFragment();
+				fragment = new RegionSectionFragment();
 				break;
 			default:
 				break;

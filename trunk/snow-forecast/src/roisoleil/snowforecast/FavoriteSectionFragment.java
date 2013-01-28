@@ -23,8 +23,6 @@ public class FavoriteSectionFragment extends ListFragment {
 
 	final static String FAVORITES = "Favorites";
 
-	protected MenuItem refreshMenuItem;
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -33,12 +31,9 @@ public class FavoriteSectionFragment extends ListFragment {
 	}
 
 	public void result(String url, XmlDom xmlDom, AjaxStatus status) {
-		if (refreshMenuItem != null) {
-			refreshMenuItem.setActionView(null);
-		}
 		if (200 == status.getCode() && xmlDom != null) {
-			PreviewAdapter favoriteAdapter = new PreviewAdapter(
-					getActivity(), xmlDom);
+			PreviewAdapter favoriteAdapter = new PreviewAdapter(getActivity(),
+					xmlDom);
 			setListAdapter(favoriteAdapter);
 			setListShown(true);
 		} else {
@@ -62,9 +57,6 @@ public class FavoriteSectionFragment extends ListFragment {
 
 	private void refresh(boolean forced) {
 		setListShown(false);
-		if (refreshMenuItem != null) {
-			refreshMenuItem.setActionView(R.layout.inprogress);
-		}
 		long expire = 24 * 60 * 60 * 1000;
 		if (forced) {
 			expire = 10;
@@ -98,7 +90,6 @@ public class FavoriteSectionFragment extends ListFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.favorite, menu);
-		refreshMenuItem = menu.findItem(R.id.item_refresh);
 	}
 
 }
