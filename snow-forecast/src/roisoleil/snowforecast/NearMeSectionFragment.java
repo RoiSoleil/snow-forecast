@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxStatus;
@@ -22,8 +21,6 @@ import com.androidquery.util.XmlDom;
 public class NearMeSectionFragment extends ListFragment {
 
 	protected View headerView;
-
-	protected MenuItem refreshMenuItem;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -36,9 +33,6 @@ public class NearMeSectionFragment extends ListFragment {
 	}
 
 	public void result(String url, XmlDom xmlDom, AjaxStatus status) {
-		if (refreshMenuItem != null) {
-			refreshMenuItem.setActionView(null);
-		}
 		if (200 == status.getCode() && xmlDom != null) {
 			PreviewAdapter favoriteAdapter = new PreviewAdapter(getActivity(),
 					xmlDom);
@@ -46,11 +40,6 @@ public class NearMeSectionFragment extends ListFragment {
 			setListShown(true);
 		} else {
 			headerView.findViewById(R.id.error).setVisibility(View.VISIBLE);
-			((TextView) headerView.findViewById(R.id.statusValue))
-					.setText(status.getCode());
-			((TextView) headerView.findViewById(R.id.messageValue))
-					.setText(status.getMessage());
-			setListShown(true);
 		}
 	}
 
@@ -65,11 +54,8 @@ public class NearMeSectionFragment extends ListFragment {
 	}
 
 	private void refresh(boolean forced) {
-		headerView.findViewById(R.id.error).setVisibility(View.GONE);
+		// headerView.findViewById(R.id.error).setVisibility(View.GONE);
 		setListShown(false);
-		if (refreshMenuItem != null) {
-			refreshMenuItem.setActionView(R.layout.inprogress);
-		}
 		long expire = 24 * 60 * 60 * 1000;
 		if (forced) {
 			expire = 10;
@@ -102,7 +88,6 @@ public class NearMeSectionFragment extends ListFragment {
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.favorite, menu);
-		refreshMenuItem = menu.findItem(R.id.item_refresh);
 	}
 
 	private Location getLocation() {

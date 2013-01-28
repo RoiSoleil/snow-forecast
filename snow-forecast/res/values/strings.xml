@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Météo Des Neiges</string>
-    <string name="title_section3">Pays</string>
+    <string name="title_section3">Régions</string>
     <string name="title_section2">A proximité</string>
     <string name="title_section1">Favoris</string>
     <string name="hello_world">Hello world!</string>
