@@ -1,0 +1,1 @@
+An Android application which allows you to view the snow forecast of ski resorts.
